@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Encriptación y desencriptación</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+</head>
+<body>
+  <h1>Encriptación y desencriptación</h1>
+  
+  <label for="input">Ingresa un valor:</label>
+  <input type="text" id="input" value="e.villalba@ptytechnologies.com">
+  
+  <div id="e">
+    Encrypted
+    <pre></pre>
+  </div>
+  
+  <div id="d">
+    Decrypted
+    <pre></pre>
+  </div>
+  
+  <script>
+    const crypto = CryptoJS;
+    const key = "5080808080802072";
+    const initVec = "6080808080807072";
+
+    const enc = (value) => crypto.AES.encrypt(crypto.enc.Utf8.parse(value), crypto.enc.Utf8.parse(key), {
+      keySize: key.length,
+      iv: crypto.enc.Utf8.parse(initVec),
+      mode: crypto.mode.CBC,
+      padding: crypto.pad.Pkcs7
+    }).toString();
+
+    const dec = (value) => crypto.AES.decrypt(value, crypto.enc.Utf8.parse(key), {
+      keySize: key.length,
+      iv: crypto.enc.Utf8.parse(initVec),
+      mode: crypto.mode.CBC,
+      padding: crypto.pad.Pkcs7
+    }).toString(crypto.enc.Utf8);
+
+    function update(value) {
+      const encryptedValue = enc(value);
+      const decryptedValue = dec(value);
+
+      document.querySelector('#e pre').innerText = encryptedValue;
+      document.querySelector('#d pre').innerText = decryptedValue;
+    }
+
+    document.querySelector('#input').addEventListener('input', (e) => {
+      update(e.target.value);
+    });
+
+    update(document.querySelector('#input').value);
+  </script>
+</body>
+</html>
