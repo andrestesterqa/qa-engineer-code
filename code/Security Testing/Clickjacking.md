@@ -18,9 +18,11 @@
       </div>  
    </body>  
 </html>
+```
 
 **Remediation**: To mitigate these vulnerabilities, it is essential to set HTTP security headers correctly and implement protection against ClickJacking.
 
 **How to test?**:
-- From CMD put "curl -I https://example.com" to verify the headers are set correctly
-- ClickJacking Protection: Try embedding your website in an iframe on a different origin and make sure it's not displayed.
+
+- From CMD put "curl -I <https://example.com>" to verify the headers are set correctly
+- ClickJacking Protection: Try embedding your website in an iframe on a different origin and make sure it's not displayed
