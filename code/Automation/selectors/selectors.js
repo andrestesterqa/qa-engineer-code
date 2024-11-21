@@ -32,7 +32,39 @@ for (let selector of selectors) {
 
 /*  VALIDATE IF CERTAIN SELECTOR EXIST INTO THE SHADOWROOT 
  */
-const shadowHost = document.querySelector('{selector-del-shadow-host}');  
-const shadowRoot = shadowHost.shadowRoot;  
-const idElements = shadowRoot.querySelectorAll("[data-testid]");  
-console.log(idElements);
+function assertSelectorInShadowRoot(shadowHostSelector, selector) { 
+  const shadowHost = document.querySelector(shadowHostSelector); // Corregido  
+  if (shadowHost === null) {
+      console.error(`The selector ${shadowHostSelector} not exists in the DOM`);
+      return;
+  }
+  const shadowRoot = shadowHost.shadowRoot;  
+  const shadowElement = shadowRoot.querySelector(selector);  
+
+  if (shadowElement) {
+      console.log(`The selector ${selector} exists in the shadow root of ${shadowHostSelector}`);
+      console.log(shadowElement)
+  } else {
+      console.error(`The selector ${selector} not exists in the shadow root of ${shadowHostSelector}`);
+  }
+}
+
+/*  VALIDATE IF CERTAIN SELECTOR EXIST INTO THE SHADOWROOT AND RETURN A LIST*/
+function assertSelectorsInShadowRoot(shadowHostSelector) {   
+  const shadowHost = document.querySelector(shadowHostSelector); // Seleccionamos el host  
+  if (shadowHost === null) {  
+      console.error(`El selector ${shadowHostSelector} no existe en el DOM`);  
+      return [];  
+  }  
+
+  const shadowRoot = shadowHost.shadowRoot;  
+  const elementsWithDataTestId = shadowRoot.querySelectorAll('[data-testid]'); // Seleccionamos todos los elementos con `data-testid`  
+
+  if (elementsWithDataTestId.length > 0) {  
+      console.log(`Se encontraron ${elementsWithDataTestId.length} elementos con data-testid en el shadow root de ${shadowHostSelector}`);  
+      return Array.from(elementsWithDataTestId); // Convertimos a un array para devolver  
+  } else {  
+      console.error(`No se encontraron elementos con data-testid en el shadow root de ${shadowHostSelector}`);  
+      return [];  
+  }  
+}
