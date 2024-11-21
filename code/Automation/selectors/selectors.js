@@ -29,3 +29,10 @@ const selectors = ['#selectorExist1', '.selectorExist2', '#selectorNotExist1', '
 for (let selector of selectors) {
     assertSelector(selector);
 }
+
+/*  VALIDATE IF CERTAIN SELECTOR EXIST INTO THE SHADOWROOT 
+ */
+const shadowHost = document.querySelector('{selector-del-shadow-host}');  
+const shadowRoot = shadowHost.shadowRoot;  
+const idElements = shadowRoot.querySelectorAll("[data-testid]");  
+console.log(idElements);
